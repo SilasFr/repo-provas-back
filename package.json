@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/SilasFr/typescript-backend-template#readme",
   "dependencies": {
+    "@prisma/client": "^3.12.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/joi": "^17.2.3",
