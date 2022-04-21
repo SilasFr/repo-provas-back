@@ -9,3 +9,5 @@ export async function signup(req: Request, res: Response) {
   await authServices.create(email, password);
   res.sendStatus(201);
 }
+
+export async function signin(req: Request, res: Response) {}
