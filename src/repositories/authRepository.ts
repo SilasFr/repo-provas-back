@@ -9,10 +9,16 @@ export async function create(email: string, password: string) {
   });
 }
 
-export async function validate(email: string, password: string) {
+export async function findUserByEmail(email: string) {
   return prisma.user.findUnique({
     where: {
       email,
     },
+  });
+}
+
+export async function createSession(userId: number, token: string) {
+  return prisma.session.create({
+    data: { userId, token },
   });
 }
