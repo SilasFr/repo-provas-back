@@ -1,5 +1,6 @@
 import { Session, User } from "@prisma/client";
 import * as authRepo from "../repositories/authRepository.js";
+import * as errorUtils from "../utils/errorUtils.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuid } from "uuid";
@@ -34,14 +35,14 @@ async function generateToken(user: User) {
 function validateUserPassword(password: string, user: User) {
   const isValidPassword: boolean = bcrypt.compareSync(password, user.password);
   if (!isValidPassword) {
-    throw { type: "unauthorized" };
+    throw errorUtils.unauthorized("Password is not valid");
   }
 }
 
 async function findUser(email: string) {
   const user: User = await authRepo.findUserByEmail(email);
   if (!user) {
-    throw { type: "not_found" };
+    throw errorUtils.notFound("User not found");
   }
   return user;
 }
@@ -50,6 +51,6 @@ export async function session(sessionId: string) {
   const id = Number(sessionId);
   const session: Session = await authRepo.findSessionById(id);
   if (!session) {
-    throw { type: "not_found" };
+    throw errorUtils.notFound("Session not found");
   }
 }
