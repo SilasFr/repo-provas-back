@@ -22,3 +22,7 @@ export async function createSession(userId: number, token: string) {
     data: { userId, token },
   });
 }
+
+export async function findSessionById(id: number) {
+  return prisma.session.findUnique({ where: { id } });
+}

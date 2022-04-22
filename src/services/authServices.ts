@@ -45,3 +45,11 @@ async function findUser(email: string) {
   }
   return user;
 }
+
+export async function session(sessionId: string) {
+  const id = Number(sessionId);
+  const session: Session = await authRepo.findSessionById(id);
+  if (!session) {
+    throw { type: "not_found" };
+  }
+}
