@@ -4,6 +4,6 @@ import { validateToken } from "../middlewares/validateToken.js";
 
 const examRouter = Router();
 
-examRouter.get("/exams?:filter", validateToken, getExams);
+examRouter.get("/exams?:filter", getExams);
 
 export default examRouter;
