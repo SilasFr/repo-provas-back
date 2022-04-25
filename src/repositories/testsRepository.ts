@@ -9,7 +9,16 @@ export async function getByDiscipline() {
           name: true,
           TeacherDiscipline: {
             select: {
-              Test: { include: { category: { select: { name: true } } } },
+              Test: {
+                select: {
+                  id: true,
+                  name: true,
+                  teacherDiscipline: {
+                    select: { teacher: { select: { name: true } } },
+                  },
+                  category: { select: { name: true } },
+                },
+              },
             },
           },
         },
@@ -34,5 +43,3 @@ export async function getByTeacher() {
     },
   });
 }
-
-export async function getByDiscipline2() {}
