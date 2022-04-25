@@ -24,6 +24,7 @@ model Term {
   number Int
 
   disciplines Discipline[]
+  tests Test[]
   @@map("terms")
 }
 
@@ -72,6 +73,8 @@ model Test {
   categoryId          Int
   teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
   teacherDisciplineId Int
+  term Term @relation(fields: [termId], references: [id])
+  termId Int @default(autoincrement())
 
   @@map("tests")
 }
