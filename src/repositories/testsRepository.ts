@@ -13,6 +13,7 @@ export async function getByDiscipline() {
                 select: {
                   id: true,
                   name: true,
+                  pdfUrl: true,
                   teacherDiscipline: {
                     select: { teacher: { select: { name: true } } },
                   },
@@ -33,9 +34,13 @@ export async function getByTeacher() {
       name: true,
       TeacherDiscipline: {
         select: {
-          discipline: {
+          Test: {
             select: {
-              term: { select: { tests: { include: { category: {} } } } },
+              id: true,
+              name: true,
+              pdfUrl: true,
+              category: {},
+              teacherDiscipline: { select: { discipline: {} } },
             },
           },
         },

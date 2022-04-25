@@ -15,7 +15,6 @@ export async function getByFilter(filter: string) {
           testCategory[test.category.name].push(test);
           delete test.category;
         });
-        console.log(testCategory);
         return { name: dp.name, tests: testCategory };
       });
       const result = {
@@ -28,6 +27,27 @@ export async function getByFilter(filter: string) {
   }
 
   if (filter === "teacher") {
-    return await testsRepo.getByTeacher();
+    const response = await testsRepo.getByTeacher();
+    const teachers = [];
+
+    response.map((obj) => {
+      const teacher = obj.name;
+      const testCategory = { P1: [], P2: [], P3: [], P2ch: [] };
+
+      obj.TeacherDiscipline.filter((td) => td.Test).map(({ Test }) => {
+        Test.map((test) => {
+          testCategory[test.category.name].push(test);
+          delete test.category;
+        });
+      });
+
+      const result = {
+        [teacher]: {
+          categories: { ...testCategory },
+        },
+      };
+      teachers.push(result);
+    });
+    return teachers;
   }
 }
