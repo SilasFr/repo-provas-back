@@ -6,22 +6,23 @@ export function ErrorHandler(
   res: Response,
   next: NextFunction
 ) {
-  if (error.type === "bad_request") {
-    res.send(error.message).status(400);
+  if (error.type == "bad_request") {
+    res.status(400).send(error.message);
   }
 
-  if (error.type === "unauthorized") {
-    res.send(error.message).status(401);
+  if (error.type == "unauthorized") {
+    res.status(401).send(error.message);
   }
 
-  if (error.type === "forbiden") {
-    res.send(error.message).status(403);
+  if (error.type == "forbiden") {
+    res.status(403).send(error.message);
   }
 
-  if (error.type === "not_found") {
-    res.send(error.message).status(404);
+  if (error.type == "not_found") {
+    res.status(404).send(error.message);
   }
 
   console.log("error-handler: ", error);
   res.status(500).send(error);
+  next();
 }

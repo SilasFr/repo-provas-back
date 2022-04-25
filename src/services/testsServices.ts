@@ -10,9 +10,10 @@ export async function getByFilter(filter: string) {
       let { number, disciplines } = term;
 
       const filteredDisciplines = disciplines.map((dp) => {
-        const testCategory = { P1: [], P2: [], P3: [], P2ch: [] };
+        const testCategory = [];
         dp.TeacherDiscipline[0].Test.map((test) => {
-          testCategory[test.category.name].push(test);
+          const category = { [test.category.name]: test };
+          testCategory.push(category);
           delete test.category;
         });
         return { name: dp.name, tests: testCategory };
