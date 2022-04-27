@@ -12,6 +12,11 @@ async function find(filter: Filter) {
   }
 }
 
+async function findSearch(filter: Filter, search: string) {
+  console.log(search);
+}
+
 export default {
   find,
+  findSearch,
 };
