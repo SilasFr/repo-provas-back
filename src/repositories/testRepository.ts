@@ -61,9 +61,8 @@ async function getTestsByTeachers() {
 
 async function getFilteredTestsByTeachers(filter: string) {
   return prisma.teacherDiscipline.findMany({
-    where: { teacher: { name: filter } },
     include: {
-      teacher: true,
+      teacher: { select: {} },
       discipline: true,
       tests: {
         include: {
