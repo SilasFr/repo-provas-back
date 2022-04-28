@@ -1,9 +1,9 @@
-import supertest from "supertest";
 import app from "../src/app.js";
+import supertest from "supertest";
 import prisma from "../src/database.js";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
-describe("test user creation", async () => {
+describe("test user creation", () => {
   beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE users;`;
   });

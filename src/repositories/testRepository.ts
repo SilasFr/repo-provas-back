@@ -21,6 +21,30 @@ async function getTestsByDiscipline() {
   });
 }
 
+async function getFilteredTestsByDiscipline(filter: string) {
+  return prisma.term.findMany({
+    include: {
+      disciplines: {
+        where: {
+          name: filter,
+        },
+        include: {
+          teacherDisciplines: {
+            include: {
+              teacher: true,
+              tests: {
+                include: {
+                  category: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
 async function getTestsByTeachers() {
   return prisma.teacherDiscipline.findMany({
     include: {
@@ -35,7 +59,24 @@ async function getTestsByTeachers() {
   });
 }
 
+async function getFilteredTestsByTeachers(filter: string) {
+  return prisma.teacherDiscipline.findMany({
+    where: { teacher: { name: filter } },
+    include: {
+      teacher: true,
+      discipline: true,
+      tests: {
+        include: {
+          category: true,
+        },
+      },
+    },
+  });
+}
+
 export default {
   getTestsByDiscipline,
+  getFilteredTestsByDiscipline,
   getTestsByTeachers,
+  getFilteredTestsByTeachers,
 };

@@ -16,7 +16,6 @@ async function signIn(req: Request, res: Response) {
 
   res.send({ token });
 }
-
 export default {
   signUp,
   signIn,

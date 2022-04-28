@@ -13,7 +13,11 @@ async function find(filter: Filter) {
 }
 
 async function findSearch(filter: Filter, search: string) {
-  console.log(search);
+  if (filter.groupBy === "disciplines") {
+    return testRepository.getFilteredTestsByDiscipline(search);
+  } else if (filter.groupBy === "teachers") {
+    return testRepository.getFilteredTestsByTeachers(search);
+  }
 }
 
 export default {

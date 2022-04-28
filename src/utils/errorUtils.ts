@@ -15,7 +15,6 @@ export function errorTypeToStatusCode(type: AppErrorTypes) {
   if (type === "wrong_schema") return 422;
   return 400;
 }
-
 export function conflictError(message?: string): AppError {
   return { type: "conflict", message };
 }
