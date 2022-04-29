@@ -20,7 +20,12 @@ async function findSearch(filter: Filter, search: string) {
   }
 }
 
+async function updateViews(id: string) {
+  return await testRepository.updateTestViewCount(Number(id));
+}
+
 export default {
   find,
   findSearch,
+  updateViews,
 };

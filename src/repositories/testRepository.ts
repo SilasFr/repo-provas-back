@@ -73,9 +73,21 @@ async function getFilteredTestsByTeachers(filter: string) {
   });
 }
 
+async function updateTestViewCount(id: number) {
+  return prisma.test.update({
+    where: { id },
+    data: {
+      views: {
+        increment: 1,
+      },
+    },
+  });
+}
+
 export default {
   getTestsByDiscipline,
   getFilteredTestsByDiscipline,
   getTestsByTeachers,
   getFilteredTestsByTeachers,
+  updateTestViewCount,
 };
