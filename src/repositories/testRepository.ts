@@ -1,4 +1,7 @@
+import { Test } from "@prisma/client";
 import prisma from "../database.js";
+
+export type TestCreate = Omit<Test, "id">;
 
 async function getTestsByDiscipline() {
   return prisma.term.findMany({
@@ -84,10 +87,15 @@ async function updateTestViewCount(id: number) {
   });
 }
 
+async function create(test: TestCreate) {
+  return await prisma.test.create({ data: { ...test } });
+}
+
 export default {
   getTestsByDiscipline,
   getFilteredTestsByDiscipline,
   getTestsByTeachers,
   getFilteredTestsByTeachers,
   updateTestViewCount,
+  create,
 };

@@ -8,4 +8,13 @@ async function getByDiscipline(id: number) {
   });
 }
 
-export default { getByDiscipline };
+async function getTeacherDisciplineId(teacherId: number, disciplineId: number) {
+  return await prisma.teacherDiscipline.findFirst({
+    where: { disciplineId: disciplineId, teacherId: teacherId },
+  });
+}
+
+export default {
+  getByDiscipline,
+  getTeacherDisciplineId,
+};

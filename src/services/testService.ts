@@ -1,4 +1,5 @@
-import testRepository from "../repositories/testRepository.js";
+import teacherRepository from "../repositories/teacherRepository.js";
+import testRepository, { TestCreate } from "../repositories/testRepository.js";
 
 interface Filter {
   groupBy: "disciplines" | "teachers";
@@ -24,7 +25,24 @@ async function updateViews(id: string) {
   return await testRepository.updateTestViewCount(Number(id));
 }
 
+async function create(test: any) {
+  const { id: teacherDisciplineId } =
+    await teacherRepository.getTeacherDisciplineId(
+      Number(test.teacherId),
+      Number(test.disciplineId)
+    );
+
+  delete test.teacherId;
+  delete test.disciplineId;
+  test.views = 0;
+  test.teacherDisciplineId = teacherDisciplineId;
+  test.categoryId = Number(test.categoryId);
+
+  return await testRepository.create(test);
+}
+
 export default {
+  create,
   find,
   findSearch,
   updateViews,

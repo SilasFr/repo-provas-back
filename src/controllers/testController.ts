@@ -25,7 +25,14 @@ async function updateViews(req: Request, res: Response) {
   res.sendStatus(200);
 }
 
+async function create(req: Request, res: Response) {
+  const test = req.body;
+  await testService.create(test);
+  res.sendStatus(201);
+}
+
 export default {
   find,
   updateViews,
+  create,
 };
