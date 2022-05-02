@@ -25,5 +25,53 @@ describe("test user creation", () => {
 });
 
 describe("tests sprint 2", () => {
-  it("should return tests filtered by query", async () => {});
+  it("should return tests by discipline", async () => {
+    const response = await supertest(app).post("/sign-in").send(user);
+    const token: string = response.body.token;
+
+    const searchResult = await supertest(app)
+      .get("/tests?groupBy=disciplines")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(searchResult.body.length).not.toBe(null);
+    expect(searchResult.status).toEqual(200);
+  });
+
+  it("should return tests filtered by query", async () => {
+    const response = await supertest(app).post("/sign-in").send(user);
+    const token: string = response.body.token;
+
+    const searchResult = await supertest(app)
+      .get(
+        "/tests?groupBy=disciplines&where=Desenvolvimento Web - Arquitetura de software"
+      )
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(searchResult.body.length).not.toBe(null);
+    expect(searchResult.status).toEqual(200);
+  });
+
+  it("should not return any tests given invalid teacher name", async () => {
+    const response = await supertest(app).post("/sign-in").send(user);
+    const token: string = response.body.token;
+
+    const searchResult = await supertest(app)
+      .get("/tests?groupBy=teachers&where=Silas")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(searchResult.body.tests.length).toBe(0);
+    expect(searchResult.status).toEqual(200);
+  });
+
+  it("should not return any tests given invalid discipline name", async () => {
+    const response = await supertest(app).post("/sign-in").send(user);
+    const token: string = response.body.token;
+
+    const searchResult = await supertest(app)
+      .get("/tests?groupBy=disciplines&where=Culinária")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(searchResult.body.tests[0].disciplines.length).toBe(0);
+    expect(searchResult.status).toEqual(200);
+  });
 });
