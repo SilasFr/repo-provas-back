@@ -2,6 +2,7 @@ import app from "../src/app.js";
 import supertest from "supertest";
 import prisma from "../src/database.js";
 import { faker } from "@faker-js/faker";
+import { getTests } from "./factory/testFactory.js";
 
 const user = {
   email: faker.internet.email(),
@@ -77,5 +78,36 @@ describe("tests sprint 2", () => {
   });
 
   // Testes de views
-  it.todo("");
+  it("it should increment the view count of a test", async () => {
+    const responseLogin = await supertest(app).post("/sign-in").send(user);
+    const token: string = responseLogin.body.token;
+
+    const test = await getTests(token);
+
+    const response = await supertest(app).patch(`/tests/views/${test.id}`);
+
+    expect(response.status).toEqual(200);
+  });
+
+  //Testar adição de prova
+  it("should add a new test given valid data", async () => {
+    const responseLogin = await supertest(app).post("/sign-in").send(user);
+    const token: string = responseLogin.body.token;
+
+    const response = await supertest(app)
+      .post("/tests/add")
+      .send({
+        name: faker.unique(faker.name.jobDescriptor),
+        pdfUrl: faker.internet.url(),
+        categoryId: 1,
+        teacherId: 1,
+        disciplineId: 1,
+      })
+      .set("Authorization", `Bearer ${token}`);
+
+    const insertedPostId: number = response.body.id;
+
+    expect(response.body).not.toBe(null);
+    expect(response.status).toEqual(201);
+  });
 });

@@ -25,7 +25,7 @@ async function main() {
 
   await seedTeacherDiscipline();
 
-  await seedTests(20);
+  await seedTests(0);
 }
 
 main()

@@ -89,7 +89,7 @@ async function updateTestViewCount(id: number) {
 }
 
 async function create(test: TestCreate) {
-  return await prisma.test.create({ data: { ...test } });
+  return await prisma.test.create({ data: { ...test }, select: { id: true } });
 }
 
 export default {
