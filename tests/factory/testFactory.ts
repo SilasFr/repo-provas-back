@@ -12,5 +12,5 @@ export async function getTests(token: string) {
 }
 
 export async function getTestById(id: number) {
-  await prisma.test.findUnique({ where: { id: id } });
+  return await prisma.test.findUnique({ where: { id: id } });
 }
