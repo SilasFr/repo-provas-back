@@ -16,4 +16,6 @@ userRouter.post(
   userController.signIn
 );
 
+userRouter.get("/oauth", userController.oauth);
+
 export default userRouter;
