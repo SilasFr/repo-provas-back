@@ -2,7 +2,7 @@ import app from "../src/app.js";
 import supertest from "supertest";
 import prisma from "../src/database.js";
 import { faker } from "@faker-js/faker";
-import { getTests } from "./factory/testFactory.js";
+import { getTestById, getTests } from "./factory/testFactory.js";
 
 const user = {
   email: faker.internet.email(),
@@ -107,7 +107,9 @@ describe("tests sprint 2", () => {
 
     const insertedPostId: number = response.body.id;
 
-    expect(response.body).not.toBe(null);
+    const existingTest = await getTestById(insertedPostId);
+
+    expect(existingTest).not.toBe(null);
     expect(response.status).toEqual(201);
   });
 });

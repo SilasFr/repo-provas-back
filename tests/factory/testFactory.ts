@@ -1,5 +1,6 @@
 import supertest from "supertest";
 import app from "../../src/app";
+import prisma from "../../src/database";
 
 export async function getTests(token: string) {
   const searchResult = await supertest(app)
@@ -8,4 +9,8 @@ export async function getTests(token: string) {
 
   return searchResult.body.tests[0].disciplines[0].teacherDisciplines[0]
     .tests[0];
+}
+
+export async function getTestById(id: number) {
+  await prisma.test.findUnique({ where: { id: id } });
 }
