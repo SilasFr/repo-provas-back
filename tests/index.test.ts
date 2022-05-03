@@ -25,6 +25,7 @@ describe("test user creation", () => {
 });
 
 describe("tests sprint 2", () => {
+  // Teste de pesquisa de prova
   it("should return tests by discipline", async () => {
     const response = await supertest(app).post("/sign-in").send(user);
     const token: string = response.body.token;
@@ -74,4 +75,7 @@ describe("tests sprint 2", () => {
     expect(searchResult.body.tests[0].disciplines.length).toBe(0);
     expect(searchResult.status).toEqual(200);
   });
+
+  // Testes de views
+  it.todo("");
 });
