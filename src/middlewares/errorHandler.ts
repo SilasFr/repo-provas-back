@@ -7,19 +7,19 @@ export function ErrorHandler(
   next: NextFunction
 ) {
   if (error.type === "bad_request") {
-    res.send(error.message).status(400);
+    res.status(400).send(error.message);
   }
 
   if (error.type === "unauthorized") {
-    res.send(error.message).status(401);
+    res.status(401).send(error.message);
   }
 
   if (error.type === "forbiden") {
-    res.send(error.message).status(403);
+    res.status(403).send(error.message);
   }
 
   if (error.type === "not_found") {
-    res.send(error.message).status(404);
+    res.status(404).send(error.message);
   }
 
   console.log("error-handler: ", error);

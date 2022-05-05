@@ -4,6 +4,6 @@ import { validateToken } from "../middlewares/validateToken.js";
 
 const testsRouter = Router();
 
-testsRouter.get("/tests?:filter", getTests);
+testsRouter.get("/tests?:filter", validateToken, getTests);
 
 export default testsRouter;

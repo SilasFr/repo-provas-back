@@ -1,4 +1,3 @@
-import { object } from "joi";
 import * as testsRepo from "../repositories/testsRepository.js";
 
 export async function getByFilter(filter: string) {
